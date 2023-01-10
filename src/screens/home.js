@@ -1,44 +1,73 @@
 import { LinearGradient } from "expo-linear-gradient";
-import React,{useEffect,useState} from "react";
+import React, { useEffect, useState } from "react";
 import { getList } from "../store/api";
-import { View, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView, Text } from "react-native";
 import { Header } from "../components/header_section";
 import { BalanceBlock } from "../components/balance_block";
 import { ScanCode } from "../components/scan_code_section";
 import { Transactions } from "../components/transactions";
 import { Goals } from "../components/goals_and_savings";
 import { GameofTheDay } from "../components/game_of_the_day";
+import { FooterSection } from "../components/footer_section";
+import { AntDesign } from "@expo/vector-icons";
+
 const Home = () => {
-    const [list,setList]=useState([])
-    console.log('---list',list);
-    const changeList=(data)=>{
-        setList(data.split(''))
-    }
-    useEffect(()=>{
-        getList(changeList);
-    },[])
+  const [list, setList] = useState([]);
+  const changeList = (data) => {
+    setList(data?.data?.split(""));
+  };
+  useEffect(() => {
+    getList(changeList);
+  }, []);
 
   return (
-    <ScrollView>
-      <View style={{ flex: 1 }}>
-        <LinearGradient colors={["#6C0070", "#AD54AF", "#AB0CB0"]}>
-          <Header />
-          <View style={{ paddingHorizontal: 12 }}>
-            <BalanceBlock />
-            <ScanCode />
+    <View style={{ flex: 1 }}>
+      <ScrollView>
+        <View style={{ flex: 1 }}>
+          <LinearGradient colors={["#6C0070", "#AD54AF", "#AB0CB0"]}>
+            <Header />
+            <View style={{ paddingHorizontal: 12 }}>
+              <BalanceBlock />
+              <ScanCode />
+            </View>
+          </LinearGradient>
+          <View style={{ paddingHorizontal: 12, paddingVertical: 12 }}>
+            <Transactions />
           </View>
-        </LinearGradient>
-        <View style={{ paddingHorizontal: 12, paddingVertical: 12 }}>
-          <Transactions />
+          <View style={{ paddingHorizontal: 12 }}>
+            <Goals />
+          </View>
+          <View style={{ paddingHorizontal: 12 }}>
+            <GameofTheDay list={list} />
+          </View>
         </View>
-        <View style={{ paddingHorizontal: 12 }}>
-          <Goals />
-        </View>
-        <View style={{ paddingHorizontal: 12 }}>
-          <GameofTheDay list={list}/>
-        </View>
+      </ScrollView>
+      <FooterSection />
+      <View
+        style={{
+          padding: 10,
+          backgroundColor: "#E5E5E5",
+          borderRadius: 27,
+          width: 191,
+          marginLeft: "48%",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "row",
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 12,
+            color: "black",
+            opacity: 0.8,
+            fontWeight: "600",
+          }}
+        >
+          Parental controls
+        </Text>
+        <AntDesign name="setting" size={20} color="#979797" />
       </View>
-    </ScrollView>
+    </View>
   );
 };
 

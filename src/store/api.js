@@ -5,7 +5,8 @@ export const getList = (changeList) => {
   axios
     .get(`${API_PATH}/test/getlist`)
     .then((res) => {
-      changeList(res)
+        console.log('===ressss',res);
+      changeList(res?.data)
     })
     .catch((e) => console.log("---get list err", e));
 };
