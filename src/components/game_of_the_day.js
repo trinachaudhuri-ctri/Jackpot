@@ -1,8 +1,35 @@
-import React from "react";
-import { View, StyleSheet, FlatList, Text } from "react-native";
-
+import React, { useEffect, useState } from "react";
+import { View, StyleSheet, FlatList, Text,TouchableOpacity } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getList } from "../store/api";
 export const GameofTheDay = ({ list }) => {
+  const [finalList, setFinalList] = useState(list);
+  const changeList=(data)=>{
+    console.log('---c',data);
+    if(data?.data){
+        setFinalList(data?.data?.split(""))
+    }else{
+        setFinalList(data)
+    }
+  }
+
+  console.log('----f',finalList,list);
+  useEffect( () => {
+    const getStoredValueCB=async()=>{
+        const listStored = await AsyncStorage.getItem("game_data") || [];
+        console.log('---stooredd',listStored);
+        listStored.length>1? listStored.split(""):[];
+         if (listStored !== list && list.length>1) {
+            console.log('---equal',list);
+           changeList(list);
+         } else {
+           changeList(listStored);
+         }
+    }
+   getStoredValueCB()
+  },[]);
   const RenderItem = ({ item }) => {
+    console.log('---item',item);
     return (
       <View style={styles.outerC}>
         <View style={styles.gameC}>
@@ -11,12 +38,14 @@ export const GameofTheDay = ({ list }) => {
       </View>
     );
   };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Game of the day</Text>
+      {console.log('---rend',list,finalList)}
       <View>
         <FlatList
-          data={list ? list : null}
+          data={finalList ?? list}
           renderItem={RenderItem}
           contentContainerStyle={{
             flexDirection: "row",
@@ -26,13 +55,15 @@ export const GameofTheDay = ({ list }) => {
             justifyContent: "center",
             alignItems: "center",
           }}
+          keyExtractor={(item,index)=>index}
+          extraData={finalList}
         />
       </View>
       <View style={styles.inner}>
         <Text style={styles.sub}>Win prizes worth ₹4000 or more. </Text>
-        <View style={styles.ctaC}>
+        <TouchableOpacity style={styles.ctaC} onPress={()=>getList(changeList)}>
           <Text style={styles.ctaT}>Try your luck</Text>
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -46,11 +77,11 @@ const styles = StyleSheet.create({
   },
   container: {
     padding: 12,
-    backgroundColor:'#FBF7F5',
-    marginTop:12,
-    borderRadius:10,
-    borderWidth:0.5,
-    marginBottom:10
+    backgroundColor: "#FBF7F5",
+    marginTop: 12,
+    borderRadius: 10,
+    borderWidth: 0.5,
+    marginBottom: 10,
   },
   sub: {
     color: "#AB604F",
@@ -82,6 +113,9 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     borderWidth: 5,
     borderColor: "rgba(0, 0, 0, 0.1)",
+    width:51,
+    justifyContent:'center',
+    alignItems:'center'
   },
   text: {
     color: "#631E00",

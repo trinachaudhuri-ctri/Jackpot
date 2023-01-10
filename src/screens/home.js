@@ -14,6 +14,7 @@ import { AntDesign } from "@expo/vector-icons";
 const Home = () => {
   const [list, setList] = useState([]);
   const changeList = (data) => {
+    console.log('---home',data);
     setList(data?.data?.split(""));
   };
   useEffect(() => {

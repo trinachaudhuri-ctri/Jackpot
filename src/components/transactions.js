@@ -17,7 +17,7 @@ export const Transactions=()=>{
                     <Text style={styles.time}>{item.time}</Text>
                 </View>
                 </View>
-                <Text style={styles.amount}>{item.amount}</Text>
+                <Text style={styles.amount(item?.type)}>{item.amount}</Text>
             </View>
             <View style={{borderBottomColor:'#000',opacity:0.8,borderBottomWidth:0.5,marginVertical:21}}/>
             </>
@@ -32,6 +32,7 @@ export const Transactions=()=>{
             <FlatList
             data={goals}
             renderItem={RenderItem}
+            keyExtractor={(item,index)=>index}
             />
             <View style={{flexDirection:'row',alignItems:'center'}}>
             <Text style={styles.transaction}>All transactions </Text>
@@ -82,12 +83,12 @@ const styles = StyleSheet.create({
         fontSize:14,
         fontWeight:'600'
     },
-    amount:{
-        color:'#000000',
+    amount:(type)=>({
+        color:type=='credit'?'#00600A':'#000000',
         fontWeight:'600',
         fontSize:18,
         opacity:0.9,
-    },
+    }),
     transaction:{
         color:'#A655A8',
         fontSize:18,

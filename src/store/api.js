@@ -1,12 +1,14 @@
 import axios from "axios";
+import { storeData } from "../utilities/storeValue";
 const API_PATH = "https://production.streakcard.click";
 
 export const getList = (changeList) => {
   axios
     .get(`${API_PATH}/test/getlist`)
     .then((res) => {
-        console.log('===ressss',res);
-      changeList(res?.data)
+      changeList(res?.data);
+      console.log('---',res);
+      storeData(res?.data?.data);
     })
     .catch((e) => console.log("---get list err", e));
 };

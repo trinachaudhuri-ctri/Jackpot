@@ -16,7 +16,9 @@ export const BalanceBlock=()=>{
         <View style={styles.belowC}>
             <Text style={styles.titleB}>Savings</Text>
                 <View style={styles.innerCB}>
+                    <>
                     <Text style={styles.amountB}>₹ 36000</Text>
+                    </>
                     <View style={styles.savemore}>
                         <Text style={styles.ctaT}>Save More</Text>
                     </View>
@@ -50,7 +52,9 @@ const styles = StyleSheet.create({
     },
     container:{backgroundColor:'white',padding:12,borderTopLeftRadius:10,borderTopRightRadius:10,elevation:8},
     belowC:{
-        backgroundColor:'white',padding:12,borderBottomLeftRadius:10,borderBottomRightRadius:10
+        backgroundColor:'white',padding:12,borderBottomLeftRadius:10,borderBottomRightRadius:10,
+        borderTopWidth:1,
+        borderTopColor:'rgba(148,11,154,0.1)'
     },
     titleB:{
         color:'rgba(104, 26, 96, 0.6)',
@@ -73,5 +77,6 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:'center',
         elevation:5,
+        marginLeft:'40%'
     }
 });
