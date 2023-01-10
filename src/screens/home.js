@@ -1,5 +1,6 @@
 import { LinearGradient } from "expo-linear-gradient";
-import React from "react";
+import React,{useEffect,useState} from "react";
+import { getList } from "../store/api";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { Header } from "../components/header_section";
 import { BalanceBlock } from "../components/balance_block";
@@ -8,6 +9,15 @@ import { Transactions } from "../components/transactions";
 import { Goals } from "../components/goals_and_savings";
 import { GameofTheDay } from "../components/game_of_the_day";
 const Home = () => {
+    const [list,setList]=useState([])
+    console.log('---list',list);
+    const changeList=(data)=>{
+        setList(data.split(''))
+    }
+    useEffect(()=>{
+        getList(changeList);
+    },[])
+
   return (
     <ScrollView>
       <View style={{ flex: 1 }}>
@@ -25,7 +35,7 @@ const Home = () => {
           <Goals />
         </View>
         <View style={{ paddingHorizontal: 12 }}>
-          <GameofTheDay />
+          <GameofTheDay list={list}/>
         </View>
       </View>
     </ScrollView>

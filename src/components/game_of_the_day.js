@@ -1,12 +1,24 @@
 import React from "react";
 import { View, StyleSheet, FlatList ,Text} from "react-native";
 
-export const GameofTheDay = () => {
+export const GameofTheDay = ({list}) => {
+    const RenderItem=({item})=>{
+        return(
+            <View style={styles.outerC}>
+                <View style={styles.gameC}>
+                    <Text style={styles.text}>{item}</Text>
+                </View>
+            </View>
+        )
+    }
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Game of the day</Text>
       <View>
-        <FlatList />
+        <FlatList 
+        data={list?list:null}
+        renderItem={RenderItem}
+        />
       </View>
       <View style={styles.inner}>
         <Text style={styles.sub}>Win prizes worth ₹4000 or more. </Text>
@@ -47,5 +59,18 @@ const styles = StyleSheet.create({
         color:'#FFFFFF',
         fontSize:18,
         fontWeight:'600'
+    },
+    outerC:{
+        borderColor:'#D72027',
+        borderWidth:5,
+        borderRadius:8
+    },
+    gameC:{
+
+    },
+    text:{
+        color:'#631E00',
+        fontFamily:'600',
+        fontSize:60
     }
 });
