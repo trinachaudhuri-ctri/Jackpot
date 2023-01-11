@@ -19,7 +19,7 @@ export const BalanceBlock = () => {
       <View style={styles.belowC}>
         <Text style={styles.titleB}>Savings</Text>
         <View style={styles.innerCB}>
-            <Text style={styles.amountB}>₹ 36000</Text>
+          <Text style={styles.amountB}>₹ 36000</Text>
           <View style={styles.savemore}>
             <Text style={styles.ctaT}>Save More</Text>
           </View>

@@ -64,13 +64,13 @@ export const GameofTheDay = ({ list }) => {
         </TouchableOpacity>
       </View>
       <View
-          style={{
-            borderBottomColor: "#000",
-            opacity: 0.8,
-            borderBottomWidth: 0.5,
-            marginVertical: 21,
-          }}
-        />
+        style={{
+          borderBottomColor: "#000",
+          opacity: 0.8,
+          borderBottomWidth: 0.5,
+          marginVertical: 21,
+        }}
+      />
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <Text style={styles.games}>View all games </Text>
         <MaterialIcons

@@ -61,10 +61,10 @@ const styles = StyleSheet.create({
     width: 191,
     marginLeft: "48%",
     justifyContent: "center",
-    position:'absolute',
+    position: "absolute",
     alignItems: "center",
-    bottom:30,
-    right:15,
+    bottom: 30,
+    right: 15,
     flexDirection: "row",
   },
   text: {
