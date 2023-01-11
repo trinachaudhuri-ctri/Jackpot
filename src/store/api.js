@@ -1,5 +1,7 @@
 import axios from "axios";
 import { storeData } from "../utilities/storeValue";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 const API_PATH = "https://production.streakcard.click";
 
 export const getList = (changeList) => {
@@ -7,19 +9,20 @@ export const getList = (changeList) => {
     .get(`${API_PATH}/test/getlist`)
     .then((res) => {
       changeList(res?.data);
-      console.log('---',res);
       storeData(res?.data?.data);
     })
     .catch((e) => console.log("---get list err", e));
 };
 
-export const userLogin = ({ number }) => {
+export const userLogin = (number ) => {
   axios
     .post(`${API_PATH}/test/login`, {
-      mobileNumber: number.toString(),
+      mobileNumber: number,
     })
-    .then((res) => console.log("---l", res))
-    .catch((e) => "---user login err", e);
+    .then(async(res) => {
+       AsyncStorage.setItem('token',res?.data?.data.id)
+    })
+    .catch((e) =>alert('Please sign up'));
 };
 
 export const userRegistration = ({
@@ -35,6 +38,6 @@ export const userRegistration = ({
       mobileNumber,
       email,
     })
-    .then((res) => console.log("---reg", res))
+    .then((res) => AsyncStorage.setItem('token',res?.data?.data?.id))
     .catch((e) => console.log("---reg", e));
 };
