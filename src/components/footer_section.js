@@ -6,6 +6,7 @@ export const FooterSection = () => {
     <Image
       source={require("../../assets/footer.png")}
       style={styles.image}
+      resizeMode='contain'
     />
   );
 };
@@ -14,5 +15,6 @@ const styles = StyleSheet.create({
   image: {
     height: 76,
     width: 303,
+    marginBottom:0
   },
 });

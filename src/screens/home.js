@@ -14,7 +14,6 @@ import { AntDesign } from "@expo/vector-icons";
 const Home = () => {
   const [list, setList] = useState([]);
   const changeList = (data) => {
-    console.log('---home',data);
     setList(data?.data?.split(""));
   };
   useEffect(() => {
@@ -44,28 +43,8 @@ const Home = () => {
         </View>
       </ScrollView>
       <FooterSection />
-      <View
-        style={{
-          padding: 10,
-          backgroundColor: "#E5E5E5",
-          borderRadius: 27,
-          width: 191,
-          marginLeft: "48%",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "row",
-        }}
-      >
-        <Text
-          style={{
-            fontSize: 12,
-            color: "black",
-            opacity: 0.8,
-            fontWeight: "600",
-          }}
-        >
-          Parental controls
-        </Text>
+      <View style={styles.parent}>
+        <Text style={styles.text}>Parental controls</Text>
         <AntDesign name="setting" size={20} color="#979797" />
       </View>
     </View>
@@ -74,4 +53,24 @@ const Home = () => {
 
 export default Home;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  parent: {
+    padding: 10,
+    backgroundColor: "#E5E5E5",
+    borderRadius: 27,
+    width: 191,
+    marginLeft: "48%",
+    justifyContent: "center",
+    position:'absolute',
+    alignItems: "center",
+    bottom:30,
+    right:15,
+    flexDirection: "row",
+  },
+  text: {
+    fontSize: 12,
+    color: "black",
+    opacity: 0.8,
+    fontWeight: "600",
+  },
+});

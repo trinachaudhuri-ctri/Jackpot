@@ -14,15 +14,16 @@ export const getList = (changeList) => {
     .catch((e) => console.log("---get list err", e));
 };
 
-export const userLogin = (number ) => {
+export const userLogin = (number, navigation) => {
   axios
     .post(`${API_PATH}/test/login`, {
       mobileNumber: number,
     })
-    .then(async(res) => {
-       AsyncStorage.setItem('token',res?.data?.data.id)
+    .then(async (res) => {
+      AsyncStorage.setItem("token", res?.data?.data.id);
+      navigation.navigate("Home");
     })
-    .catch((e) =>alert('Please sign up'));
+    .catch((e) => alert("Please sign up"));
 };
 
 export const userRegistration = ({
@@ -30,6 +31,7 @@ export const userRegistration = ({
   lastName,
   mobileNumber,
   email,
+  navigation,
 }) => {
   axios
     .post(`${API_PATH}/test/register`, {
@@ -38,6 +40,12 @@ export const userRegistration = ({
       mobileNumber,
       email,
     })
-    .then((res) => AsyncStorage.setItem('token',res?.data?.data?.id))
-    .catch((e) => console.log("---reg", e));
+    .then((res) => {
+      navigation.navigate("Home");
+      console.log("--res", res);
+      AsyncStorage.setItem("token", res?.data?.data?.id);
+    })
+    .catch((e) => {
+      console.log("---reg", e);
+    });
 };

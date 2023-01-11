@@ -7,13 +7,13 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
 export default function App() {
-  const [signedIn, setIsSignIn] = useState("");
+  const [signedIn, setIsSignIn] = useState(false);
   const getToken = async () => {
     const retreivedToken =await AsyncStorage.getItem("token");
-    console.log('----token!!',retreivedToken);
-    setIsSignIn(retreivedToken);
+    if(retreivedToken){
+    setIsSignIn(true);
+    }
   };
-  console.log('---sign',signedIn);
   useEffect(() => {
     getToken();
   }, []);
@@ -24,18 +24,18 @@ export default function App() {
         screenOptions={{
           headerShown: false,
         }}
+        // initialRouteName={signedIn? 'Home':'Login'}
       >
-        {signedIn!=='' && signedIn!==null ? (
+        {/* {signedIn ? (
           <>
             <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="Login" component={Profile} />
           </>
         ) : (
-          <>
+          <> */}
             <Stack.Screen name="Login" component={Profile} />
             <Stack.Screen name="Home" component={Home} />
-          </>
-        )}
+          {/* </> */}
+        {/* )} */}
       </Stack.Navigator>
     </NavigationContainer>
   );

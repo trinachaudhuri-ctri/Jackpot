@@ -1,35 +1,38 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, FlatList, Text,TouchableOpacity } from "react-native";
+import {
+  View,
+  StyleSheet,
+  FlatList,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { MaterialIcons } from "@expo/vector-icons";
 import { getList } from "../store/api";
+
 export const GameofTheDay = ({ list }) => {
   const [finalList, setFinalList] = useState(list);
-  const changeList=(data)=>{
-    console.log('---c',data);
-    if(data?.data){
-        setFinalList(data?.data?.split(""))
-    }else{
-        setFinalList(data)
+  const changeList = (data) => {
+    if (data?.data) {
+      setFinalList(data?.data?.split(""));
+    } else {
+      setFinalList(data);
     }
-  }
+  };
 
-  console.log('----f',finalList,list);
-  useEffect( () => {
-    const getStoredValueCB=async()=>{
-        const listStored = await AsyncStorage.getItem("game_data") || [];
-        console.log('---stooredd',listStored);
-        listStored.length>1? listStored.split(""):[];
-         if (listStored !== list && list.length>1) {
-            console.log('---equal',list);
-           changeList(list);
-         } else {
-           changeList(listStored);
-         }
-    }
-   getStoredValueCB()
-  },[]);
+  useEffect(() => {
+    const getStoredValueCB = async () => {
+      const listStored = (await AsyncStorage.getItem("game_data")) || [];
+      listStored.length > 1 ? listStored.split("") : [];
+      if (listStored !== list && list.length > 1) {
+        changeList(list);
+      } else {
+        changeList(listStored);
+      }
+    };
+    getStoredValueCB();
+  }, []);
   const RenderItem = ({ item }) => {
-    console.log('---item',item);
     return (
       <View style={styles.outerC}>
         <View style={styles.gameC}>
@@ -42,28 +45,40 @@ export const GameofTheDay = ({ list }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Game of the day</Text>
-      {console.log('---rend',list,finalList)}
       <View>
         <FlatList
           data={finalList ?? list}
           renderItem={RenderItem}
-          contentContainerStyle={{
-            flexDirection: "row",
-            borderColor: "rgba(136,23,34,0.3)",
-            borderWidth: 5,
-            borderRadius: 8,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-          keyExtractor={(item,index)=>index}
+          contentContainerStyle={styles.flatlist}
+          keyExtractor={(item, index) => index}
           extraData={finalList}
         />
       </View>
       <View style={styles.inner}>
         <Text style={styles.sub}>Win prizes worth ₹4000 or more. </Text>
-        <TouchableOpacity style={styles.ctaC} onPress={()=>getList(changeList)}>
+        <TouchableOpacity
+          style={styles.ctaC}
+          onPress={() => getList(changeList)}
+        >
           <Text style={styles.ctaT}>Try your luck</Text>
         </TouchableOpacity>
+      </View>
+      <View
+          style={{
+            borderBottomColor: "#000",
+            opacity: 0.8,
+            borderBottomWidth: 0.5,
+            marginVertical: 21,
+          }}
+        />
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <Text style={styles.games}>View all games </Text>
+        <MaterialIcons
+          name="play-arrow"
+          size={20}
+          color="#A3503E"
+          style={{ marginTop: 2 }}
+        />
       </View>
     </View>
   );
@@ -113,13 +128,26 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     borderWidth: 5,
     borderColor: "rgba(0, 0, 0, 0.1)",
-    width:51,
-    justifyContent:'center',
-    alignItems:'center'
+    width: 51,
+    justifyContent: "center",
+    alignItems: "center",
   },
   text: {
     color: "#631E00",
-    fontFamily: "600",
+    fontFamily: "bold",
     fontSize: 60,
+  },
+  flatlist: {
+    flexDirection: "row",
+    borderColor: "rgba(136,23,34,0.3)",
+    borderWidth: 5,
+    borderRadius: 8,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  games: {
+    color: "#A3503E",
+    fontSize: 18,
+    fontWeight: "600",
   },
 });
